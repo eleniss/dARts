@@ -10,6 +10,7 @@ public class Dart : MonoBehaviour
     public bool isForceOK = false;
     bool isDartRotating = false;
     bool isDartReadyToShoot = true;
+    bool isDartHitOnBoard = false;
 
     ARSessionOrigin aRSession;
     GameObject ARcam;
@@ -57,8 +58,26 @@ public class Dart : MonoBehaviour
         IEnumerator InitDartDestroyVFX()
         {
             yield return new WaitForSeconds(5f);
-            Destroy(gameObject);
+            if (!isDartHitOnBoard)
+            {
+                Destroy(gameObject);
+            }
         }
     }
-    
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("dart_board"))
+        {
+            //Vibra
+            Handheld.Vibrate();
+            GetComponent<Rigidbody>().isKinematic = true;
+            isDartRotating = false;
+
+            //dardo hit diana
+            isDartHitOnBoard = true;
+
+        }
+    }
+
 }
