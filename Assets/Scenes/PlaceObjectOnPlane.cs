@@ -42,7 +42,7 @@ public class PlaceObjectOnPlane : MonoBehaviour
 
     private void UpdatePlacementPosistion()
     {
-        var screenCenter = Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f));
+        var screenCenter = Camera.main.ViewportToScreenPoint(new Vector3(0.5f, 0.5f)); //no poner camera.current
         if (m_RaycastManager.Raycast(screenCenter, s_Hits, TrackableType.PlaneWithinPolygon))
         {
             placementPoseIsValid = s_Hits.Count > 0;
