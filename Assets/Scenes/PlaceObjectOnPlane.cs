@@ -8,6 +8,7 @@ using UnityEngine.XR.ARSubsystems;
 public class PlaceObjectOnPlane : MonoBehaviour
 {
     public GameObject objectToPlace;
+
     public GameObject placementIndicator;
     private Pose placementPose;
     private Transform placementTransform;
