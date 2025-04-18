@@ -754,6 +754,8 @@ GameObject:
   - component: {fileID: 1751497202}
   - component: {fileID: 1751497201}
   - component: {fileID: 1751497200}
+  - component: {fileID: 1751497204}
+  - component: {fileID: 1751497203}
   m_Layer: 0
   m_Name: AR Session Origin
   m_TagString: Untagged
@@ -837,6 +839,33 @@ MonoBehaviour:
   m_PlanePrefab: {fileID: 1887370595680236721, guid: cd08bb1bc86704143ba57bcbb9b2ec92,
     type: 3}
   m_DetectionMode: 2
+--- !u!114 &1751497203
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751497197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b95d54bd045b30a4280e64af14da99a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1751497204
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1751497197}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 250a3953867600f46b9b24f587b19ac8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  DartPrefab: {fileID: 919132149155446097, guid: 946265fedef6f1b4b86a69a2135b9bbe,
+    type: 3}
+  DartThrowPoint: {fileID: 658217381}
 --- !u!1 &1820189342
 GameObject:
   m_ObjectHideFlags: 0
