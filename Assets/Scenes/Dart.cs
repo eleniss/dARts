@@ -23,7 +23,7 @@ public class Dart : MonoBehaviour
         ARcam = aRSession.transform.Find("AR Camera").gameObject;
 
 
-        rg = gameObject.GetComponent <Rigidbody>();
+        rg = gameObject.GetComponent < Rigidbody>();
         dirObj = GameObject.Find("DartThrowPoint");
     }
     //---------------------------------------------------------------------------------------------------------
