@@ -7,7 +7,7 @@ public class DartController : MonoBehaviour
 {
     public GameObject DartPrefab;
     public Transform DartThrowPoint;
-    ARSession aRSession;
+    ARSessionOrigin aRSession;
     GameObject ARCam;
     //Transform DartboardObj;
     private GameObject DartTemp;
@@ -16,7 +16,7 @@ public class DartController : MonoBehaviour
 
     void Start()
     {
-        aRSession = GameObject.FindWithTag("AR Session").GetComponent<ARSession>();
+        aRSession = GameObject.FindWithTag("AR Session Origin").GetComponent<ARSessionOrigin>();
         ARCam = aRSession.transform.Find("AR Camera").gameObject;
     }
 
@@ -32,17 +32,24 @@ public class DartController : MonoBehaviour
 
     void Update()
     {
-        Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-        RaycastHit raycastHit;
-        if (Physics.Raycast(raycast, out raycastHit))
+        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
         {
-            if (raycastHit.collider.CompareTag("dart"))
+            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            RaycastHit raycastHit;
+            if (Physics.Raycast(raycast, out raycastHit))
             {
-                //Disable back touch Collider from dart 
-                raycastHit.collider.enabled = false;
-                DartTemp.transform.parent = aRSession.transform;
+                if (raycastHit.collider.CompareTag("dart"))
+                {
+                    //Disable back touch Collider from dart 
+                    raycastHit.collider.enabled = false;
+                    DartTemp.transform.parent = aRSession.transform;
+
+                    Dart currentDartScript = DartTemp.GetComponent<Dart>();
+                    currentDartScript.isForceOK = true;
+                }
             }
         }
+        
     }
 
 
