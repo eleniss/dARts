@@ -31,15 +31,20 @@ public class Dart : MonoBehaviour
     {
         if (isForceOK)
         {
+            Debug.Log("Dardo disparado");
             dartFrontCollider.enabled = true;
             StartCoroutine(InitDartDestroyVFX());
             GetComponent<Rigidbody>().isKinematic = false;
+            rg.AddForce(dirObj.transform.forward * 18f, ForceMode.Impulse); // APLICA FUERZA AQUÍ
             isForceOK = false;
             isDartRotating = true;
 
         }
         //add force
-        rg.AddForce(dirObj.transform.forward * (12f + 6f) * Time.deltaTime, ForceMode.VelocityChange);
+        if (!isDartRotating)
+        {
+            rg.AddForce(dirObj.transform.forward * (12f + 6f) * Time.deltaTime, ForceMode.VelocityChange);
+        }
 
         //Dart ready
         if (isDartReadyToShoot)

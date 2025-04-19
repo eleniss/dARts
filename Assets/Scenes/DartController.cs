@@ -32,22 +32,43 @@ public class DartController : MonoBehaviour
 
     void Update()
     {
-        if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
-        {
-            Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
-            RaycastHit raycastHit;
-            if (Physics.Raycast(raycast, out raycastHit))
-            {
-                if (raycastHit.collider.CompareTag("dart"))
-                {
-                    //Disable back touch Collider from dart 
-                    raycastHit.collider.enabled = false;
-                    DartTemp.transform.parent = aRSession.transform;
+#if UNITY_EDITOR
+        //bool tapped = Input.GetMouseButtonDown(0); // Detecta clic izquierdo del ratón
+        //Vector2 touchPosition = Input.mousePosition;
+        bool tapped = Input.GetMouseButtonDown(0);
+#else
+    //bool tapped = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began; // Para dispositivos táctiles
+    //Vector2 touchPosition = Input.GetTouch(0).position;
+    bool tapped = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
+#endif
 
-                    Dart currentDartScript = DartTemp.GetComponent<Dart>();
-                    currentDartScript.isForceOK = true;
-                }
-            }
+        if (tapped && DartTemp != null)
+        {
+            //if(Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            //{
+            Debug.Log("Disparo");
+            DartTemp.transform.parent = null; // Desvinculamos el dardo de la cámara
+            Dart currentDartScript = DartTemp.GetComponent<Dart>();
+            currentDartScript.isForceOK = true;
+
+            // Preparamos nuevo dardo luego de un pequeño delay
+            StartCoroutine(SpawnNextDart());
+
+            //Ray raycast = Camera.main.ScreenPointToRay(Input.GetTouch(0).position);
+            //RaycastHit raycastHit;
+            //if (Physics.Raycast(raycast, out raycastHit))
+            //{
+            //    if (raycastHit.collider.CompareTag("dart"))
+            //    {
+            //        //Disable back touch Collider from dart 
+            //        raycastHit.collider.enabled = false;
+            //        DartTemp.transform.parent = aRSession.transform;
+
+            //        Dart currentDartScript = DartTemp.GetComponent<Dart>();
+            //        currentDartScript.isForceOK = true;
+            //    }
+            //}
+            //}
         }
         
     }
@@ -62,10 +83,22 @@ public class DartController : MonoBehaviour
     public IEnumerator WaitAndSpawnDart()
     {
         yield return new WaitForSeconds(0.1f);
+        
+
+        
+
+        //ORIGINAL:
         DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, ARCam.transform.localRotation);
         DartTemp.transform.parent = ARCam.transform;
+
         rb = DartTemp.GetComponent<Rigidbody>();
         rb.isKinematic = true;
+    }
+
+    IEnumerator SpawnNextDart()
+    {
+        yield return new WaitForSeconds(1.5f); // Espera antes de crear el siguiente
+        DartsInit(); // Reinstancia un nuevo dardo listo para disparar
     }
 }
 

@@ -6,6 +6,7 @@ TagManager:
   tags:
   - dart
   - dart_board
+  - AR Session Origin
   layers:
   - Default
   - TransparentFX

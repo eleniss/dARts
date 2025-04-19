@@ -32,11 +32,24 @@ public class PlaceObjectOnPlane : MonoBehaviour
         {
             UpdatePlacementPosistion();
             UpdatePlacementIndicator();
+#if UNITY_EDITOR
+            bool tapped = Input.GetMouseButtonDown(0);
+            Vector2 touchPosition = Input.mousePosition;
+#else
+    bool tapped = Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began;
+    Vector2 touchPosition = Input.touchCount > 0 ? Input.GetTouch(0).position : default;
+#endif
 
-            if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            if (placementPoseIsValid && tapped)
             {
+                Debug.Log("Colocando objeto desde " + (Application.isEditor ? "Editor" : "Móvil"));
                 PlaceObject();
             }
+
+            //if (placementPoseIsValid && Input.touchCount > 0 && Input.GetTouch(0).phase == TouchPhase.Began)
+            //{
+            //    PlaceObject();
+            //}
         }
     }
 
@@ -73,6 +86,7 @@ public class PlaceObjectOnPlane : MonoBehaviour
 
     private void PlaceObject()
     {
+        Debug.Log("Colocando diana en: " + placementPose.position);
         Instantiate(objectToPlace, placementPose.position, placementTransform.rotation);
         onPlacedObject?.Invoke();
         isObjectPlaced = true;
