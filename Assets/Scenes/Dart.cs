@@ -23,27 +23,40 @@ public class Dart : MonoBehaviour
         ARcam = aRSession.transform.Find("AR Camera").gameObject;
 
 
-        rg = gameObject.GetComponent < Rigidbody>();
         dirObj = GameObject.Find("DartThrowPoint");
     }
+    void Awake()
+    {
+        rg = GetComponent<Rigidbody>();
+    }
+
     //---------------------------------------------------------------------------------------------------------
     private void FixedUpdate()
     {
+        if (rg == null)
+        {
+            Debug.LogError("El Rigidbody 'rg' es null");
+            return;
+        }
         if (isForceOK)
         {
             Debug.Log("Dardo disparado");
             dartFrontCollider.enabled = true;
             StartCoroutine(InitDartDestroyVFX());
             GetComponent<Rigidbody>().isKinematic = false;
-            rg.AddForce(dirObj.transform.forward * 18f, ForceMode.Impulse); // APLICA FUERZA AQUÍ
+            //rg.AddForce(dirObj.transform.forward * 18f, ForceMode.Impulse); // APLICA FUERZA AQUÍ
+            Debug.DrawRay(transform.position, Camera.main.transform.forward * 5, Color.red, 2f); //dibuja el recorrido
+            rg.AddForce(Camera.main.transform.forward * 18f, ForceMode.Impulse);
+
             isForceOK = false;
             isDartRotating = true;
 
         }
         //add force
-        if (!isDartRotating)
+        
+        if (!isDartRotating && dirObj != null)
         {
-            rg.AddForce(dirObj.transform.forward * (12f + 6f) * Time.deltaTime, ForceMode.VelocityChange);
+            rg.AddForce(dirObj.transform.forward * 18f * Time.deltaTime, ForceMode.VelocityChange);
         }
 
         //Dart ready
@@ -59,14 +72,16 @@ public class Dart : MonoBehaviour
             transform.Rotate(Vector3.forward * Time.deltaTime * 400f);
         }
 
+        StartCoroutine(InitDartDestroyVFX());
 
-        IEnumerator InitDartDestroyVFX()
+
+    }
+    private IEnumerator InitDartDestroyVFX()
+    {
+        yield return new WaitForSeconds(5f);
+        if (!isDartHitOnBoard)
         {
-            yield return new WaitForSeconds(5f);
-            if (!isDartHitOnBoard)
-            {
-                Destroy(gameObject);
-            }
+            Destroy(gameObject);
         }
     }
 

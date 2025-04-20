@@ -19,7 +19,7 @@ public class PlaceObjectOnPlane : MonoBehaviour
     ARRaycastManager m_RaycastManager;
     static List<ARRaycastHit> s_Hits = new List<ARRaycastHit>();
 
-    public static event Action onPlacedObject;
+    public static event Action onPlacedObject; //eliminar tracking pared
     void Awake()
     {
         if(TryGetComponent(out ARRaycastManager aRRaycast))

@@ -18,7 +18,7 @@ public class ARPlaneController : MonoBehaviour
 
     void OnDisable()
     {
-        PlaceObjectOnPlane.onPlacedObject -= DisablePlaneDetection;
+        PlaceObjectOnPlane.onPlacedObject -= DisablePlaneDetection; //cuando el objeto se ha destruido o disabled
     }
 
     void DisablePlaneDetection()
