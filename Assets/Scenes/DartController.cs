@@ -44,11 +44,11 @@ public class DartController : MonoBehaviour
                     raycastHit.collider.enabled = false;
                     DartTemp.transform.parent = aRSession.transform;
 
-                    //Dart currentDartScript = DartTemp.GetComponent<Dart>();
-                    //currentDartScript.isForceOK = true;
+                    Dart currentDartScript = DartTemp.GetComponent<Dart>();
+                    currentDartScript.isForceOK = true;
 
-                    ////Load next dart
-                    //DartsInit();
+                    //Load next dart
+                    DartsInit();
                 }
             }
         }

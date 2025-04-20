@@ -19,7 +19,7 @@ public class Dart : MonoBehaviour
 
     void Start()
     {
-        aRSession = GameObject.Find("AR Session").GetComponent<ARSessionOrigin>();
+        aRSession = GameObject.Find("AR Session Origin").GetComponent<ARSessionOrigin>();
         ARcam = aRSession.transform.Find("AR Camera").gameObject;
 
 
@@ -44,7 +44,6 @@ public class Dart : MonoBehaviour
             dartFrontCollider.enabled = true;
             StartCoroutine(InitDartDestroyVFX());
             GetComponent<Rigidbody>().isKinematic = false;
-            //rg.AddForce(dirObj.transform.forward * 18f, ForceMode.Impulse); // APLICA FUERZA AQUÍ
             Debug.DrawRay(transform.position, Camera.main.transform.forward * 5, Color.red, 2f); //dibuja el recorrido
             rg.AddForce(Camera.main.transform.forward * 18f, ForceMode.Impulse);
 
