@@ -6,11 +6,11 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/Start_screen.unity
-    guid: 5ae4d116ec0df1849b074de0459f5814
-  - enabled: 1
     path: Assets/Scenes/Darts game.unity
     guid: ad5dc22d532018c4587a6979d005fe59
+  - enabled: 1
+    path: Assets/Scenes/Start_screen.unity
+    guid: 5ae4d116ec0df1849b074de0459f5814
   m_configObjects:
     UnityEditor.XR.ARCore.ARCoreSettings: {fileID: 11400000, guid: 6ee72d15cf39dd748a13eac57397b9af,
       type: 2}
