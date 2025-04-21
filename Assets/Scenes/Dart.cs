@@ -82,6 +82,7 @@ public class Dart : MonoBehaviour
         if (other.CompareTag("dart_board") && !isDartHitOnBoard)
         {
             Debug.Log("Dardo impactó");
+
             //Vibra
             Handheld.Vibrate();
             
@@ -90,10 +91,11 @@ public class Dart : MonoBehaviour
             rg.angularVelocity = Vector3.zero;
             
             isDartRotating = false;
+
             //dardo hit diana
             isDartHitOnBoard = true;
 
-            // Lo hacemos hijo de la diana para que se mueva con ella si es necesario
+            // Lo hacemos hijo de la diana para que se mueva con ella
             transform.SetParent(other.transform);
 
         }
