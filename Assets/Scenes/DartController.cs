@@ -83,13 +83,27 @@ public class DartController : MonoBehaviour
     public IEnumerator WaitAndSpawnDart()
     {
         yield return new WaitForSeconds(0.1f);
-        
 
-        
+
+        // Dirección hacia adelante, pero en plano horizontal
+        Vector3 forward = ARCam.transform.forward;
+        forward.y = 0; // Eliminar inclinación vertical
+        forward.Normalize();
+
+        // Rotación mirando al frente, manteniendo vertical (eje Y)
+        Quaternion flatRotation = Quaternion.LookRotation(forward, Vector3.up) * Quaternion.Euler(10f, 0f, 0f); ;
+
+        // Posición desplazada hacia adelante y abajo desde el punto de lanzamiento
+        Vector3 spawnPosition = DartThrowPoint.position + forward * 0.6f + Vector3.down * 0.3f;
+
+        // Instanciamos el dardo
+        DartTemp = Instantiate(DartPrefab, spawnPosition, flatRotation);
+        DartTemp.transform.parent = ARCam.transform;
+
 
         //ORIGINAL:
-        DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, ARCam.transform.localRotation);
-        DartTemp.transform.parent = ARCam.transform;
+        //DartTemp = Instantiate(DartPrefab, DartThrowPoint.position, ARCam.transform.localRotation);
+        //DartTemp.transform.parent = ARCam.transform;
 
         rb = DartTemp.GetComponent<Rigidbody>();
         rb.isKinematic = true;

@@ -33,13 +33,16 @@ public class Dart : MonoBehaviour
     //---------------------------------------------------------------------------------------------------------
     private void FixedUpdate()
     {
+        Debug.Log("FixedUpdate activo");
         if (isForceOK)
         {
             Debug.Log("Dardo disparado");
             dartFrontCollider.enabled = true;
             StartCoroutine(InitDartDestroyVFX());
             GetComponent<Rigidbody>().isKinematic = false;
-            rg.AddForce(dirObj.transform.forward * 18f, ForceMode.Impulse); // APLICA FUERZA AQUÍ
+
+            rg.AddForce(transform.forward * 6f, ForceMode.Impulse); // APLICA FUERZA AQUÍ
+            
             isForceOK = false;
             isDartRotating = true;
 
@@ -67,24 +70,31 @@ public class Dart : MonoBehaviour
         IEnumerator InitDartDestroyVFX()
         {
             yield return new WaitForSeconds(5f);
-            if (!isDartHitOnBoard)
-            {
+            //if (!isDartHitOnBoard)
+            //{
                 Destroy(gameObject);
-            }
+            //}
         }
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("dart_board"))
+        if (other.CompareTag("dart_board") && !isDartHitOnBoard)
         {
+            Debug.Log("Dardo impactó");
             //Vibra
             Handheld.Vibrate();
+            
             GetComponent<Rigidbody>().isKinematic = true;
+            rg.velocity = Vector3.zero;
+            rg.angularVelocity = Vector3.zero;
+            
             isDartRotating = false;
-
             //dardo hit diana
             isDartHitOnBoard = true;
+
+            // Lo hacemos hijo de la diana para que se mueva con ella si es necesario
+            transform.SetParent(other.transform);
 
         }
     }
