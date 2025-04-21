@@ -19,13 +19,17 @@ public class Dart : MonoBehaviour
 
     void Start()
     {
-        aRSession = GameObject.Find("AR Session").GetComponent<ARSessionOrigin>();
+        aRSession = GameObject.Find("AR Session Origin").GetComponent<ARSessionOrigin>();
         ARcam = aRSession.transform.Find("AR Camera").gameObject;
 
 
-        rg = gameObject.GetComponent < Rigidbody>();
         dirObj = GameObject.Find("DartThrowPoint");
     }
+    void Awake()
+    {
+        rg = GetComponent<Rigidbody>();
+    }
+
     //---------------------------------------------------------------------------------------------------------
     private void FixedUpdate()
     {
